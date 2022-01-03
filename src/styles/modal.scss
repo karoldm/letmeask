@@ -1,0 +1,90 @@
+.ReactModal__Content {
+  background: #fff;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  border: 0;
+  border-radius: 8px;
+  transform: translate(-50%, -50%);
+  padding: 50px 90px;
+  
+  .modal-content{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-direction: column;
+
+    span {
+      font-family: 'Poppins', sans-serif;
+      font-weight: bold;
+      font-size: 24px;
+      line-height: 34px;
+      color: #29292E;
+    }
+
+    p {
+      font-family: 'Roboto', sans-serif;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 26px;
+      color: #737380;
+    }
+
+    >div {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+
+      button {
+        border-radius: 8px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 14px 36px;
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        line-height: 19px;  
+        border: 0;
+
+        cursor: pointer;
+
+        transition: filter 0.2s;
+      }
+
+      button:hover {
+        filter: brightness(0.7);
+      }
+
+      #button-cancelar{
+        background: #DBDCDD;
+        color: #737380;
+      }
+
+      #button-excluir{
+        background: #E73F5D;
+        color: #fefefe;
+      }
+    }
+
+    svg path{
+      stroke: #E73F5D;
+      stroke-width: 2.5px;
+    }
+
+    svg {
+      height: 48px;
+      width: 48px;
+    }
+  }
+}
+
+.ReactModal__Overlay {
+  background: #050206;
+  opacity: 0.8;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
