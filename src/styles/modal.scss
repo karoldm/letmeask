@@ -61,7 +61,7 @@
         color: #737380;
       }
 
-      #button-excluir{
+      #button-confirm{
         background: #E73F5D;
         color: #fefefe;
       }
@@ -80,8 +80,7 @@
 }
 
 .ReactModal__Overlay {
-  background: #050206;
-  opacity: 0.8;
+  background: rgba(0, 0, 0, 0.8);
   position: fixed;
   top: 0;
   left: 0;

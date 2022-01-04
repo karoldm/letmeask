@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'
 
-import ReactModal from 'react-modal';
-
 import logoImg from '../assets/images/logo.svg';
 import deleteImg from '../assets/images/delete.svg';
 import closeRoomImg from '../assets/images/close-room.svg';
@@ -11,6 +9,7 @@ import deleteQuestionImg from '../assets/images/delete-question.svg';
 import { Button } from '../components/Button';
 import { Question } from '../components/Question';
 import { RoomCode } from '../components/RoomCode';
+import { Modal } from '../components/Modal';
 
 import { useRoom } from '../hooks/useRoom';
 
@@ -18,7 +17,6 @@ import '../styles/room.scss';
 import '../styles/modal.scss';
 
 import { database } from '../services/firebase';
-import { ModalContent } from '../components/ModalContent';
 
 
 type RoomParams = {
@@ -50,8 +48,6 @@ export function AdminRoom() {
     await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
     setModalQuestionIsOpen(false);
   }
-
-  ReactModal.setAppElement('#root');
 
   return (
     <div id='page-room'>
@@ -91,34 +87,24 @@ export function AdminRoom() {
           })}
         </div>
       </main >
-      <ReactModal
+      <Modal
+        title={'Excluir pergunta'}
+        description={'Tem certeza que deseja excluir essa pergunta?'}
+        icon={deleteQuestionImg}
+        titleButton={'sim, excluir'}
+        setModalOpen={() => setModalQuestionIsOpen(false)}
+        handleConfirmButton={handleDeleteQuestion}
         isOpen={modalQuestionIsOpen}
-        className={"ReactModal__Content"}
-        overlayClassName={"ReactModal__Overlay"}
-      >
-        <ModalContent
-          title={'Excluir pergunta'}
-          description={'Tem certeza que deseja excluir essa pergunta?'}
-          icon={deleteQuestionImg}
-          titleButton={'sim, excluir'}
-          isOpen={() => setModalQuestionIsOpen(false)}
-          handleConfirmButton={handleDeleteQuestion}
-        />
-      </ReactModal>
-      <ReactModal
+      />
+      <Modal
+        title={'Encerrar sala'}
+        description={'Tem certeza que você deseja encerrar esta sala?'}
+        icon={closeRoomImg}
+        titleButton={'sim, encerrar'}
+        setModalOpen={() => setModalCloseRoomIsOpen(false)}
+        handleConfirmButton={handleEndRoom}
         isOpen={modalCloseRoomIsOpen}
-        className={"ReactModal__Content"}
-        overlayClassName={"ReactModal__Overlay"}
-      >
-        <ModalContent
-          title={'Encerrar sala'}
-          description={'Tem certeza que você deseja encerrar esta sala?'}
-          icon={closeRoomImg}
-          titleButton={'sim, encerrar'}
-          isOpen={() => setModalCloseRoomIsOpen(false)}
-          handleConfirmButton={handleEndRoom}
-        />
-      </ReactModal>
+      />
     </div >
   );
 }
