@@ -5,6 +5,8 @@ import logoImg from '../assets/images/logo.svg';
 import deleteImg from '../assets/images/delete.svg';
 import closeRoomImg from '../assets/images/close-room.svg';
 import deleteQuestionImg from '../assets/images/delete-question.svg';
+import checkImg from '../assets/images/check.svg';
+import answerImg from '../assets/images/answer.svg';
 
 import { Button } from '../components/Button';
 import { Question } from '../components/Question';
@@ -49,6 +51,18 @@ export function AdminRoom() {
     setModalQuestionIsOpen(false);
   }
 
+  async function handleCheckQuestionAsAnswered(id: string) {
+    await database.ref(`rooms/${roomId}/questions/${id}`).update({
+      isAnswered: true
+    });
+  }
+
+  async function handleHighlightQuestion(id: string) {
+    await database.ref(`rooms/${roomId}/questions/${id}`).update({
+      isHighlighted: true
+    });
+  }
+
   return (
     <div id='page-room'>
       <header>
@@ -72,7 +86,19 @@ export function AdminRoom() {
                 content={question.content}
                 author={question.author}
                 key={question.id}
+                isAnswered={question.isAnswered}
+                isHighlighted={question.isHighlighted}
               >
+                {!question.isAnswered && (
+                  <>
+                    <button type='button' onClick={() => { handleCheckQuestionAsAnswered(question.id) }}>
+                      <img src={checkImg} alt='Marcar pergunta como respondida' />
+                    </button>
+                    <button type='button' onClick={() => { handleHighlightQuestion(question.id) }}>
+                      <img src={answerImg} alt='Dar destaque a pergunta' />
+                    </button>
+                  </>
+                )}
                 <button
                   type='button'
                   onClick={() => {
