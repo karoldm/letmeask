@@ -7,6 +7,7 @@ import closeRoomImg from '../assets/images/close-room.svg';
 import deleteQuestionImg from '../assets/images/delete-question.svg';
 import checkImg from '../assets/images/check.svg';
 import answerImg from '../assets/images/answer.svg';
+import ilustrationImg from '../assets/images/Ilustração.svg';
 
 import { Button } from '../components/Button';
 import { Question } from '../components/Question';
@@ -26,7 +27,6 @@ type RoomParams = {
 }
 
 export function AdminRoom() {
-  //const { user } = useAuth();
 
   const [modalQuestionIsOpen, setModalQuestionIsOpen] = useState(false);
   const [modalCloseRoomIsOpen, setModalCloseRoomIsOpen] = useState(false);
@@ -80,37 +80,46 @@ export function AdminRoom() {
           {questions.length > 0 && <span>{questions.length} pergunta(s)</span>}
         </div>
         <div className='question-list'>
-          {questions.map((question) => {
-            return (
-              <Question
-                content={question.content}
-                author={question.author}
-                key={question.id}
-                isAnswered={question.isAnswered}
-                isHighlighted={question.isHighlighted}
-              >
-                {!question.isAnswered && (
-                  <>
-                    <button type='button' onClick={() => { handleCheckQuestionAsAnswered(question.id) }}>
-                      <img src={checkImg} alt='Marcar pergunta como respondida' />
-                    </button>
-                    <button type='button' onClick={() => { handleHighlightQuestion(question.id) }}>
-                      <img src={answerImg} alt='Dar destaque a pergunta' />
-                    </button>
-                  </>
-                )}
-                <button
-                  type='button'
-                  onClick={() => {
-                    setQuestionId(question.id);
-                    setModalQuestionIsOpen(true);
-                  }}
+          {questions.length > 0 ? (
+            questions.map((question) => {
+              return (
+                <Question
+                  content={question.content}
+                  author={question.author}
+                  key={question.id}
+                  isAnswered={question.isAnswered}
+                  isHighlighted={question.isHighlighted}
                 >
-                  <img src={deleteImg} alt='Remover pergunta' />
-                </button>
-              </Question>
-            )
-          })}
+                  {!question.isAnswered && (
+                    <>
+                      <button type='button' onClick={() => { handleCheckQuestionAsAnswered(question.id) }}>
+                        <img src={checkImg} alt='Marcar pergunta como respondida' />
+                      </button>
+                      <button type='button' onClick={() => { handleHighlightQuestion(question.id) }}>
+                        <img src={answerImg} alt='Dar destaque a pergunta' />
+                      </button>
+                    </>
+                  )}
+                  <button
+                    type='button'
+                    onClick={() => {
+                      setQuestionId(question.id);
+                      setModalQuestionIsOpen(true);
+                    }}
+                  >
+                    <img src={deleteImg} alt='Remover pergunta' />
+                  </button>
+                </Question>
+              )
+            })
+          ) : (
+            <div className='no-questions'>
+              <img src={ilustrationImg} alt='ilustração de caixas de texto' />
+              <strong>Nenhuma pergunta por aqui...</strong>
+              <p>Envie o código desta sala para seus amigos e comece a responder perguntas!</p>
+            </div>
+          )}
+
         </div>
       </main >
       <Modal

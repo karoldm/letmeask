@@ -113,6 +113,26 @@
 
     .question-list {
       margin-top: 32px;
+      
+      .no-questions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+
+        p {
+          color: #737380;
+          font-size: 0.8rem;
+        }
+
+        strong {
+          color: #29292E;
+          font-size: 1.2rem;
+          font-weight: 600;
+        }
+
+      }
     }
   }
 }
