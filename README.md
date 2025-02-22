@@ -11,6 +11,11 @@ Letmeask é uma aplicação para criar salas de chat e responder perguntas duran
 - **Curtidas nas perguntas** para destacar as mais relevantes
 - **Banco de dados em tempo real** com Firebase Realtime Database
 
+![login](/assets/image1.png)
+![room](/assets/image2.png)
+![send-question](/assets/image3.png)
+![admin-room](/assets/image4.png)
+
 ## 💪 Tecnologias Utilizadas
 
 - **ReactJS**
@@ -21,17 +26,20 @@ Letmeask é uma aplicação para criar salas de chat e responder perguntas duran
 ## 🛠️ Como Rodar o Projeto
 
 1. **Clone o repositório:**
+
    ```sh
    git clone https://github.com/seu-usuario/letmeask.git
    cd letmeask
    ```
 
 2. **Instale as dependências:**
+
    ```sh
    yarn install
    ```
 
 3. **Configure o Firebase:**
+
    - Crie um projeto no [Firebase](https://firebase.google.com/)
    - Ative **Authentication** (método Google)
    - Ative **Realtime Database**
