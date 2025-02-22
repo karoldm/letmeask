@@ -11,11 +11,12 @@ Letmeask é uma aplicação para criar salas de chat e responder perguntas duran
 - **Curtidas nas perguntas** para destacar as mais relevantes
 - **Banco de dados em tempo real** com Firebase Realtime Database
 
-| Login                                | Room                              |
-| ------------------------------------ | --------------------------------- |
-| ![login](/assets/image1.png)         | ![room](/assets/image2.png)       |
-| Send Question                        | Admin Room                        |
-| ![send-question](/assets/image3.png) | ![admin-room](/assets/image4.png) |
+<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+  <img src="/assets/image1.png" alt="login" width="100%">
+  <img src="/assets/image2.png" alt="room" width="100%">
+  <img src="/assets/image3.png" alt="send-question" width="100%">
+  <img src="/assets/image4.png" alt="admin-room" width="100%">
+</div>
 
 ## 💪 Tecnologias Utilizadas
 
