@@ -1,4 +1,4 @@
-import ReactModal from 'react-modal';
+import ReactModal from "react-modal";
 
 type ModalContentProps = {
   title: string;
@@ -8,9 +8,10 @@ type ModalContentProps = {
   setModalOpen: (open: boolean) => void;
   handleConfirmButton: () => void;
   isOpen: boolean;
-}
+};
 
-ReactModal.setAppElement('#root');
+ReactModal.setAppElement("#root");
+const TypedModal = ReactModal as unknown as React.FC<any>;
 
 export function Modal({
   title,
@@ -19,24 +20,27 @@ export function Modal({
   titleButton,
   setModalOpen,
   handleConfirmButton,
-  isOpen }: ModalContentProps) {
-
+  isOpen,
+}: ModalContentProps) {
   return (
-    <ReactModal
+    <TypedModal
       isOpen={isOpen}
       className={"ReactModal__Content"}
       overlayClassName={"ReactModal__Overlay"}
     >
-
-      <div className='modal-content '>
+      <div className="modal-content ">
         <img src={icon} alt={title} />
         <span>{title}</span>
         <p>{description}</p>
         <div>
-          <button id='button-cancelar' onClick={() => setModalOpen(false)}>cancelar</button>
-          <button id='button-confirm' onClick={handleConfirmButton}>{titleButton}</button>
+          <button id="button-cancelar" onClick={() => setModalOpen(false)}>
+            cancelar
+          </button>
+          <button id="button-confirm" onClick={handleConfirmButton}>
+            {titleButton}
+          </button>
         </div>
       </div>
-    </ReactModal>
+    </TypedModal>
   );
 }

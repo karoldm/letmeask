@@ -1,36 +1,34 @@
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom'
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-import logoImg from '../assets/images/logo.svg';
-import deleteImg from '../assets/images/delete.svg';
-import closeRoomImg from '../assets/images/close-room.svg';
-import deleteQuestionImg from '../assets/images/delete-question.svg';
-import checkImg from '../assets/images/check.svg';
-import answerImg from '../assets/images/answer.svg';
-import ilustrationImg from '../assets/images/Ilustração.svg';
+import answerImg from "../assets/images/answer.svg";
+import checkImg from "../assets/images/check.svg";
+import closeRoomImg from "../assets/images/close-room.svg";
+import deleteQuestionImg from "../assets/images/delete-question.svg";
+import deleteImg from "../assets/images/delete.svg";
+import ilustrationImg from "../assets/images/Ilustração.svg";
+import logoImg from "../assets/images/logo.svg";
 
-import { Button } from '../components/Button';
-import { Question } from '../components/Question';
-import { RoomCode } from '../components/RoomCode';
-import { Modal } from '../components/Modal';
+import { Button } from "../components/Button";
+import { Modal } from "../components/Modal";
+import { Question } from "../components/Question";
+import { RoomCode } from "../components/RoomCode";
 
-import { useRoom } from '../hooks/useRoom';
+import { useRoom } from "../hooks/useRoom";
 
-import '../styles/room.scss';
-import '../styles/modal.scss';
+import "../styles/modal.scss";
+import "../styles/room.scss";
 
-import { database } from '../services/firebase';
-
+import { database } from "../services/firebase";
 
 type RoomParams = {
   id: string;
-}
+};
 
 export function AdminRoom() {
-
   const [modalQuestionIsOpen, setModalQuestionIsOpen] = useState(false);
   const [modalCloseRoomIsOpen, setModalCloseRoomIsOpen] = useState(false);
-  const [questionId, setQuestionId] = useState('');
+  const [questionId, setQuestionId] = useState("");
 
   const params = useParams<RoomParams>();
   const roomId = params.id!;
@@ -43,7 +41,7 @@ export function AdminRoom() {
       endedAt: new Date(),
     });
 
-    navigate('/');
+    navigate("/");
   }
 
   async function handleDeleteQuestion() {
@@ -53,33 +51,38 @@ export function AdminRoom() {
 
   async function handleCheckQuestionAsAnswered(id: string) {
     await database.ref(`rooms/${roomId}/questions/${id}`).update({
-      isAnswered: true
+      isAnswered: true,
     });
   }
 
   async function handleHighlightQuestion(id: string) {
+    const questionData = await database
+      .ref(`rooms/${roomId}/questions/${id}`)
+      .get();
     await database.ref(`rooms/${roomId}/questions/${id}`).update({
-      isHighlighted: true
+      isHighlighted: !questionData.val().isHighlighted,
     });
   }
 
   return (
-    <div id='page-room'>
+    <div id="page-room">
       <header>
-        <div className='content'>
-          <img src={logoImg} alt='letmeask' />
+        <div className="content">
+          <img src={logoImg} alt="letmeask" />
           <div>
             <RoomCode code={roomId} />
-            <Button isOutlined onClick={() => setModalCloseRoomIsOpen(true)}>Encerrar sala</Button>
+            <Button isOutlined onClick={() => setModalCloseRoomIsOpen(true)}>
+              Encerrar sala
+            </Button>
           </div>
         </div>
       </header>
       <main>
-        <div className='room-title'>
+        <div className="room-title">
           <h1>sala {title}</h1>
           {questions.length > 0 && <span>{questions.length} pergunta(s)</span>}
         </div>
-        <div className='question-list'>
+        <div className="question-list">
           {questions.length > 0 ? (
             questions.map((question) => {
               return (
@@ -92,54 +95,69 @@ export function AdminRoom() {
                 >
                   {!question.isAnswered && (
                     <>
-                      <button type='button' onClick={() => { handleCheckQuestionAsAnswered(question.id) }}>
-                        <img src={checkImg} alt='Marcar pergunta como respondida' />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleCheckQuestionAsAnswered(question.id);
+                        }}
+                      >
+                        <img
+                          src={checkImg}
+                          alt="Marcar pergunta como respondida"
+                        />
                       </button>
-                      <button type='button' onClick={() => { handleHighlightQuestion(question.id) }}>
-                        <img src={answerImg} alt='Dar destaque a pergunta' />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleHighlightQuestion(question.id);
+                        }}
+                      >
+                        <img src={answerImg} alt="Dar destaque a pergunta" />
                       </button>
                     </>
                   )}
                   <button
-                    type='button'
+                    type="button"
                     onClick={() => {
                       setQuestionId(question.id);
                       setModalQuestionIsOpen(true);
                     }}
                   >
-                    <img src={deleteImg} alt='Remover pergunta' />
+                    <img src={deleteImg} alt="Remover pergunta" />
                   </button>
                 </Question>
-              )
+              );
             })
           ) : (
-            <div className='no-questions'>
-              <img src={ilustrationImg} alt='ilustração de caixas de texto' />
+            <div className="no-questions">
+              <img src={ilustrationImg} alt="ilustração de caixas de texto" />
               <strong>Nenhuma pergunta por aqui...</strong>
-              <p>Envie o código desta sala para seus amigos e comece a responder perguntas!</p>
+              <p>
+                Envie o código desta sala para seus amigos e comece a responder
+                perguntas!
+              </p>
             </div>
           )}
-
         </div>
-      </main >
+      </main>
       <Modal
-        title={'Excluir pergunta'}
-        description={'Tem certeza que deseja excluir essa pergunta?'}
+        title={"Excluir pergunta"}
+        description={"Tem certeza que deseja excluir essa pergunta?"}
         icon={deleteQuestionImg}
-        titleButton={'sim, excluir'}
+        titleButton={"sim, excluir"}
         setModalOpen={() => setModalQuestionIsOpen(false)}
         handleConfirmButton={handleDeleteQuestion}
         isOpen={modalQuestionIsOpen}
       />
       <Modal
-        title={'Encerrar sala'}
-        description={'Tem certeza que você deseja encerrar esta sala?'}
+        title={"Encerrar sala"}
+        description={"Tem certeza que você deseja encerrar esta sala?"}
         icon={closeRoomImg}
-        titleButton={'sim, encerrar'}
+        titleButton={"sim, encerrar"}
         setModalOpen={() => setModalCloseRoomIsOpen(false)}
         handleConfirmButton={handleEndRoom}
         isOpen={modalCloseRoomIsOpen}
       />
-    </div >
+    </div>
   );
 }
