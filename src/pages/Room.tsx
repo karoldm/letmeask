@@ -19,7 +19,7 @@ type RoomParams = {
 export function Room() {
   const [newQuestion, setNewQuestion] = useState('');
 
-  const { user } = useAuth();
+  const { user, signInWithGoogle } = useAuth();
 
   const params = useParams<RoomParams>();
   const roomId = params.id!;
@@ -62,6 +62,14 @@ export function Room() {
     }
   }
 
+  const handleLogin = async () => {
+    try {
+      await signInWithGoogle();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <div id='page-room'>
       <header>
@@ -89,7 +97,13 @@ export function Room() {
                 <span>{user.name}</span>
               </div>
             ) : (
-              <span>Para enviar uma pergunta, <button>faça seu login</button></span>
+              <span>Para enviar uma pergunta,
+                <button
+                  style={{ cursor: 'pointer' }}
+                  onClick={handleLogin}
+                >faça seu login
+                </button>
+              </span>
             )}
             <Button disabled={!user} type='submit' >Enviar pergunta</Button>
           </div>
@@ -104,7 +118,7 @@ export function Room() {
                 isAnswered={question.isAnswered}
                 isHighlighted={question.isHighlighted}
               >
-                {!question.isAnswered && (
+                {(!question.isAnswered && user) && (
                   <button
                     className={`like-button ${question.likeId ? 'liked' : ''}`}
                     type='button'

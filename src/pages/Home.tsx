@@ -18,11 +18,16 @@ export function Home() {
   const { signInWithGoogle, user } = useAuth();
 
   async function handleCreateRoom() {
-    if (!user) {
-      await signInWithGoogle();
+    try {
+      if (!user) {
+        await signInWithGoogle();
+      }
+      if (user) {
+        navigate('/rooms/new');
+      }
+    } catch (error) {
+      console.error(error);
     }
-
-    navigate('/rooms/new');
   }
 
   async function handleJoinRoom(event: FormEvent) {
